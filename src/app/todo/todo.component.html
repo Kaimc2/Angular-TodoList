@@ -1,0 +1,93 @@
+<section
+  class="w-full md:w-[60%] mx-auto p-4 md:p-4 mt-10 border shadow-md rounded flex flex-col justify-center items-center dark:bg-slate-800 dark:border-none transition-colors"
+>
+  <form (ngSubmit)="addTask()" class="flex justify-center gap-4 mb-2">
+    <input
+      [(ngModel)]="task"
+      class="border py-2 px-4 shadow-lg rounded-md dark:bg-slate-700 dark:text-slate-300 dark:border-slate-900 transition-colors"
+      placeholder="Enter a task"
+      name="task"
+      #taskModel="ngModel"
+      type="text"
+      required
+    />
+
+    <button
+      class="border px-2 rounded-md shadow-md hover:opacity-70 disabled:opacity-50 disabled:cursor-not-allowed dark:border-slate-900 dark:text-slate-300 dark:bg-slate-700 transition-colors"
+      [disabled]="!taskModel.valid"
+      type="submit"
+    >
+      Add
+    </button>
+  </form>
+  <p
+    [hidden]="taskModel.valid || taskModel.pristine"
+    class="text-sm text-red-500"
+  >
+    Task is required
+  </p>
+
+  <div class="flex flex-col lg:flex-row justify-center mt-4" cdkDropListGroup>
+    <div class="example-container w-[300px]">
+      <h2 class="text-2xl mb-2 font-bold dark:text-slate-300 transition-colors">
+        To do
+      </h2>
+
+      <div
+        cdkDropList
+        [cdkDropListData]="todo"
+        class="example-list bg-white border border-gray-300 rounded dark:bg-slate-700 dark:border-slate-900 dark:rounded-none transition-colors"
+        (cdkDropListDropped)="drop($event)"
+      >
+        @for (task of todo; let i = $index; track task;) {
+        <div
+          (mouseenter)="setHover(true, i, 'todo')"
+          (mouseleave)="setHover(false, i, 'todo')"
+          class="example-box border-b border-b-gray-300 dark:bg-slate-700 dark:text-slate-300 dark:border-b-slate-900 transition-colors"
+          cdkDrag
+        >
+          <p>{{ task }}</p>
+          <button
+            (click)="removeTask(task, 'todo', i)"
+            [hidden]="!todoHoverState[i]"
+            class="text-red-500 hover:text-red-800"
+          >
+            <remove-icon title="Remove Task" />
+          </button>
+        </div>
+        }
+      </div>
+    </div>
+
+    <div class="example-container w-[300px]">
+      <h2 class="text-2xl mb-2 font-bold dark:text-slate-300 transition-colors">
+        Done
+      </h2>
+
+      <div
+        cdkDropList
+        [cdkDropListData]="done"
+        class="example-list bg-white border border-gray-300 rounded dark:bg-slate-700 dark:border-slate-900 dark:rounded-none transition-colors"
+        (cdkDropListDropped)="drop($event)"
+      >
+        @for (task of done; let i = $index; track task;) {
+        <div
+          (mouseenter)="setHover(true, i, 'done')"
+          (mouseleave)="setHover(false, i, 'done')"
+          class="example-box border-b border-b-gray-300 dark:bg-slate-700 dark:text-slate-300 dark:border-b-slate-900 transition-colors"
+          cdkDrag
+        >
+          <p>{{ task }}</p>
+          <button
+            (click)="removeTask(task, 'done', i)"
+            [hidden]="!doneHoverState[i]"
+            class="text-red-500 hover:text-red-800"
+          >
+            <remove-icon title="Remove Task" />
+          </button>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>

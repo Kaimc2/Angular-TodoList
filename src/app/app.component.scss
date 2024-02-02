@@ -1,0 +1,15 @@
+.navbar {
+  @apply flex justify-between p-5 shadow-md dark:bg-slate-800 dark:text-gray-50;
+}
+
+.navbar-items {
+  @apply flex items-center gap-10;
+}
+
+.navbar .activeButton {
+  @apply underline;
+}
+
+.navbar-item:hover {
+  text-decoration: underline;
+}

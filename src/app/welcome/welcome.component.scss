@@ -1,0 +1,29 @@
+.container {
+  margin: 2rem auto 0px auto;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn {
+  // background: rgb(238, 238, 238);
+  padding: 10px 10px;
+  border-radius: 5px;
+  border: none;
+}
+
+.btn:hover {
+  cursor: pointer;
+  // background: rgb(228, 228, 228);
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.hero {
+  width: 80%;
+}
