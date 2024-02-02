@@ -37,7 +37,7 @@
         cdkDropList
         [cdkDropListData]="todo"
         class="example-list bg-white border border-gray-300 rounded dark:bg-slate-700 dark:border-slate-900 dark:rounded-none transition-colors"
-        (cdkDropListDropped)="drop($event)"
+        (cdkDropListDropped)="drop($event, 'todo')"
       >
         @for (task of todo; let i = $index; track task;) {
         <div
@@ -68,7 +68,7 @@
         cdkDropList
         [cdkDropListData]="done"
         class="example-list bg-white border border-gray-300 rounded dark:bg-slate-700 dark:border-slate-900 dark:rounded-none transition-colors"
-        (cdkDropListDropped)="drop($event)"
+        (cdkDropListDropped)="drop($event, 'done')"
       >
         @for (task of done; let i = $index; track task;) {
         <div

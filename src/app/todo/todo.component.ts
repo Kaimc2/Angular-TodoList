@@ -26,23 +26,26 @@ import { TodoItemComponent } from './todo-item.component';
   styleUrl: './todo.component.scss',
 })
 export class TodoComponent implements OnInit {
-  todo: string[] = localStorage.getItem('todo')
-    ? JSON.parse(String(localStorage.getItem('todo')))
-    : [];
-  done: string[] = localStorage.getItem('done')
-    ? JSON.parse(String(localStorage.getItem('done')))
-    : [];
+  todo!: string[];
+  done!: string[];
   @ViewChild('taskModel') taskModel!: NgModel;
   task: string = '';
   todoHoverState: boolean[] = [];
   doneHoverState: boolean[] = [];
 
   ngOnInit(): void {
-    localStorage.setItem('todo', JSON.stringify([]));
-    localStorage.setItem('done', JSON.stringify([]));
+    if (!localStorage.getItem('todo') && !localStorage.getItem('done')) {
+      localStorage.setItem('todo', JSON.stringify([]));
+      localStorage.setItem('done', JSON.stringify([]));
+      this.todo = JSON.parse(String(localStorage.getItem('todo')));
+      this.done = JSON.parse(String(localStorage.getItem('done')));
+    } else {
+      this.todo = JSON.parse(String(localStorage.getItem('todo')));
+      this.done = JSON.parse(String(localStorage.getItem('done')));
+    }
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<string[]>, container: string) {
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
@@ -58,7 +61,7 @@ export class TodoComponent implements OnInit {
       );
 
       // Check if in todo container
-      if (event.previousContainer.id == 'cdk-drop-list-1') {
+      if (container == 'todo') {
         this.markAsTodo(event.container.data, event.currentIndex);
       } else {
         this.markAsDone(event.container.data, event.currentIndex);
