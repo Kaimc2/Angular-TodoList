@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   CdkDragDrop,
   CdkDrag,
@@ -25,13 +25,22 @@ import { TodoItemComponent } from './todo-item.component';
   templateUrl: './todo.component.html',
   styleUrl: './todo.component.scss',
 })
-export class TodoComponent {
-  todo: string[] = JSON.parse(String(localStorage.getItem('todo')));
-  done: string[] = JSON.parse(String(localStorage.getItem('done')));
+export class TodoComponent implements OnInit {
+  todo: string[] = localStorage.getItem('todo')
+    ? JSON.parse(String(localStorage.getItem('todo')))
+    : [];
+  done: string[] = localStorage.getItem('done')
+    ? JSON.parse(String(localStorage.getItem('done')))
+    : [];
   @ViewChild('taskModel') taskModel!: NgModel;
   task: string = '';
   todoHoverState: boolean[] = [];
   doneHoverState: boolean[] = [];
+
+  ngOnInit(): void {
+    localStorage.setItem('todo', JSON.stringify([]));
+    localStorage.setItem('done', JSON.stringify([]));
+  }
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
